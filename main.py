@@ -1,6 +1,6 @@
 import __builtins__
 import utils
-import hay, wood, carrot, pumkin
+import hay, wood, carrot, pumpkin
 
 
 target_hay    = 1000
@@ -11,17 +11,13 @@ target_pumpkin= 1000
 
 def fill():
     while (num_items(Items.Hay) < target_hay):
-        hay.plant_hay(target_hay)
-
+        hay.restock_hey()
     while (num_items(Items.Wood) < target_wood):
-        wood.plant_bush(target_wood)
-
+        wood.restock_wood()
     while (num_items(Items.Carrot) < target_carrot):
-        carrot.plant_carrot(target_carrot)
-    
+        pass
     while (num_items(Items.Pumpkin) < target_pumpkin):
-        pumkin.plant_carrot(target_pumpkin)
-
+        pass
 
 if __name__=='__main__':
     utils.move_to_origin()
