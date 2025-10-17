@@ -1,10 +1,16 @@
 import __builtins__
 
+
+crop_ground_map = {
+    Entities.Grass:  None,
+    Entities.Bush:   None,
+    Entities.Tree:   None,
+    Entities.Carrot: Grounds.Soil,
+}
+
+
 def move_to_origin():
-    for x in range(get_pos_x()):
-        move(West)
-    for y in range(get_pos_y()):
-        move(South)
+    move_to(0, 0)
 
 
 def move_to(x, y):
@@ -56,11 +62,14 @@ def enum_display(iterable, title=None):
     enum(iterable, enum_func)
 
 
-def get_plant_func(ground, crop, water_level_threshold=0, fert=False):
+def get_plant_func(ground, crop, water_level_threshold=0.5, wait=False, fert=False):
 
     def check_harvest_till_plant():
         # ground: Grounds
         # crop:   Entities
+
+        if wait and (not can_harvest()) :
+            pass
 
         if can_harvest():
             harvest()
@@ -79,8 +88,6 @@ def get_plant_func(ground, crop, water_level_threshold=0, fert=False):
 
 
 def init_arr(size, val=0):
-    # size: int
-
     xrr = []
     for x in range(size):
         yrr = []
@@ -92,8 +99,6 @@ def init_arr(size, val=0):
 
 
 def map_cond(arr, cond, val=1):
-    # crop: Entities
-
     for x in range(get_world_size()):
         for y in range(get_world_size()):
             if cond(x, y):
