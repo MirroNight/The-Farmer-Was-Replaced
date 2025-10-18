@@ -18,6 +18,8 @@ def get_pattern_func(product, plant_func1, plant_func2=None, plant_func3=None):
 
     else:
         def plant_pattern_uniform(arr=None):
+            if arr:
+                utils.move_to_origin()
             for y in range(get_world_size()):
                 for x in range(get_world_size()):
                     plant_func1()

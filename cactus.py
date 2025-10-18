@@ -161,9 +161,11 @@ def take_cactus_to_xy(arr, x0, y0, x, y, order):
         success = True
         while delta_x != 0 and success:
             arr, delta_x, success = move_n(arr, delta_x, (East, West))
-        while delta_y != 0:
+        success = True
+        while delta_y != 0 and success:
             arr, delta_y, success = move_n(arr, delta_y, (North, South))
-        while delta_x != 0:
+        success = True
+        while delta_x != 0 and success:
             arr, delta_x, success = move_n(arr, delta_x, (East, West))
         arr[get_pos_y()][get_pos_x()] = None
     else:
@@ -207,9 +209,9 @@ def restock_cactus():
 
 
     while size_cnt:
-        # utils.arr_display(arr)
-        # quick_print(size_large, 'xy_large: ', xy_large, '    end_large: ', end_large)
-        # quick_print(size_small, 'xy_small: ', xy_small, '    end_small: ', end_small)
+        utils.arr_display(arr)
+        quick_print(size_large, 'start_large: ', xy_large, '    end_large: ', end_large)
+        quick_print(size_small, 'start_small: ', xy_small, '    end_small: ', end_small)
 
         size_cnt, size_large, xy_large = get_nearest(arr, size_cnt, size_large, end_large, 'large')
         if size_large == None:

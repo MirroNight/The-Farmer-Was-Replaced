@@ -31,9 +31,6 @@ def get_next_location(arr, pos, plant_queue):
     elif len(plant_queue) > 36:
         queue_pos = plant_queue.pop(0)
         utils.move_to(queue_pos[0], queue_pos[1])
-        while not can_harvest():
-            pass
-        harvest()
         arr[queue_pos[0]][queue_pos[1]] = -1
         return arr, queue_pos, plant_queue
     

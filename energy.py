@@ -24,15 +24,16 @@ def harvest_next(bins, petals_cnt):
         bins.pop(petals_cnt)
         petals_cnt -= 1
         if petals_cnt == 6:
-            return None, None, 0, 0
+            bins = None
+            return None, None
         
     x, y = bins[petals_cnt].pop(0)
     # quick_print(x, y, petals_cnt)
     utils.move_to(x, y)
     while not can_harvest():
-        do_a_flip()
+        pass
     harvest()
-    return bins, petals_cnt, x, y
+    return bins, petals_cnt
 
 
 def restock_power(arr):
@@ -41,8 +42,8 @@ def restock_power(arr):
     arr = patterns.get_pattern_func(Items.Power, plant_sunflower)(arr)
     bins = bin_petals_cnt(arr)
 
-    while bins:
-        bins, petals_cnt, x, y = harvest_next(bins, petals_cnt)
+    while petals_cnt:
+        bins, petals_cnt = harvest_next(bins, petals_cnt)
     return arr
 
 
