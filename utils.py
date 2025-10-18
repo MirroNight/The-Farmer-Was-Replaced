@@ -62,7 +62,7 @@ def enum_display(iterable, title=None):
     enum(iterable, enum_func)
 
 
-def get_plant_func(ground, crop, water_level_threshold=0.5, wait=False, fert=False):
+def get_plant_func(ground, crop, water_level_threshold=0.5, wait=False, force=False, fert=False):
 
     def check_harvest_till_plant():
         # ground: Grounds
@@ -78,7 +78,11 @@ def get_plant_func(ground, crop, water_level_threshold=0.5, wait=False, fert=Fal
             plant(crop)
         elif ((not get_entity_type()) 
              or
-             (get_entity_type() == Entities.Dead_Pumpkin)):
+             (get_entity_type() == Entities.Dead_Pumpkin)
+             or
+             force):
+            if get_ground_type() != ground:
+                till()
             plant(crop)
 
         if get_water() < water_level_threshold:
