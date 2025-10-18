@@ -43,7 +43,7 @@ def enum(iterable, func):
         func(i, iterable[i])
 
 
-def arr_disply(arr, title=None):
+def arr_display(arr, title=None):
     quick_print('')
     if title:
         quick_print(title)
@@ -87,7 +87,7 @@ def get_plant_func(ground, crop, water_level_threshold=0.5, wait=False, fert=Fal
     return check_harvest_till_plant
 
 
-def init_arr(size, val=0):
+def init_arr(size=get_world_size(), val=0):
     xrr = []
     for x in range(size):
         yrr = []

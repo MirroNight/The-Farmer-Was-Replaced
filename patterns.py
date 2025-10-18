@@ -17,12 +17,15 @@ def get_pattern_func(product, plant_func1, plant_func2=None, plant_func3=None):
         pattern_func = plant_pattern_checkerboard
 
     else:
-        def plant_pattern_uniform():
-            for x in range(get_world_size()):
-                for y in range(get_world_size()):
+        def plant_pattern_uniform(arr=None):
+            for y in range(get_world_size()):
+                for x in range(get_world_size()):
                     plant_func1()
-                    move(North)
-                move(East)
+                    if arr:
+                        arr[y][x] = measure()
+                    move(East)
+                move(North)
+            return arr
         pattern_func = plant_pattern_uniform
     return pattern_func
 

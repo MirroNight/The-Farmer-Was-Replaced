@@ -2,23 +2,23 @@ import __builtins__
 import utils, patterns
 
 def check_and_harvest_pumpkin(arr, x, y, size, xi=0, yi=0, mv=True):
-    # utils.arr_disply(arr, 'check')
+    # utils.arr_display(arr, 'check')
     if arr[x][y] > size**2:
         if mv:
             utils.move_to(x+xi, y+yi)
         if can_harvest():
             harvest()
             plant(Entities.Pumpkin)
-            # utils.arr_disply(arr, '0 before')
+            # utils.arr_display(arr, '0 before')
             arr = utils.arr_fill(arr, x, y, size, 0)
-            # utils.arr_disply(arr, '0 after')
+            # utils.arr_display(arr, '0 after')
     return arr
 
 
 def subregions_pumpkin(arr, x, y, size=6):
     # quick_print('----- -----')
     # quick_print('sub cord', x, y, size)
-    # utils.arr_disply(arr, 'sub before')
+    # utils.arr_display(arr, 'sub before')
     
     if arr[x][y] <= 0:
         utils.move_to(x, y)
@@ -56,6 +56,8 @@ def subregions_pumpkin(arr, x, y, size=6):
             elif get_entity_type() == Entities.Pumpkin:
                 continue
             else:
+                if get_ground_type() != Grounds.Soil:
+                    till()
                 plant(Entities.Pumpkin)
                 arr[x+xi][y+yi] = 0
     
@@ -92,7 +94,7 @@ def remainder_pumpkin(arr, size):
 def main_pumpkin(arr, size):
     # arr holds bitmap of live pumpkins
 
-    # utils.arr_disply(arr, 'main before')
+    # utils.arr_display(arr, 'main before')
 
     for x in range(get_world_size() // size):
         for y in range(get_world_size() // size):
@@ -101,7 +103,7 @@ def main_pumpkin(arr, size):
     if get_world_size() % size:
         arr = remainder_pumpkin(arr, size)
 
-    # utils.arr_disply(arr, 'main after')
+    # utils.arr_display(arr, 'main after')
 
     return arr
 
@@ -121,6 +123,6 @@ if __name__=='__main__':
     # set_world_size(10)
     utils.move_to_origin()
     
-    arr = restock_pumpkin(utils.init_arr(get_world_size()))
+    arr = restock_pumpkin(utils.init_arr(get_world_size()), True)
     while True:
         arr = restock_pumpkin(arr)
