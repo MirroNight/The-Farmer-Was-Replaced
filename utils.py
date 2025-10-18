@@ -23,7 +23,7 @@ def move_to(x, y):
             move(direction)
     
     def move_wrap(a, b, d1, d2):
-        if abs(b-a) < get_world_size()/2:
+        if abs(b-a) <= get_world_size()/2:
             if b-a > 0:
                 move_n(d1, b-a)
             else:
