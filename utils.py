@@ -162,13 +162,7 @@ def arr_sum_kernel(arr, size, cond):
 
 
 if __name__=='__main__':
-    move_to(1, 1)
-
-    locs1 = [(1, 10), (10, 10), (10, 1), (1, 1)]
-    for x, y in locs1:
-        move_to(x,y)
+    move_to(0,0)
+    move_to(8,0)
     
-    locs2 = [(10, 1), (10, 10), (1, 10), (1, 1)]
-    for x, y in locs2:
-        move_to(x,y)
     pass
