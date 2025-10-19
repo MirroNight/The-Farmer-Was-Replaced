@@ -47,7 +47,7 @@ def snake_move_prime(_x, _y):
         else:
             move(North)
 
-## TODO: add tail check
+
 def snake_move_dest(arr, _x, _y, x, y, tail_length):
     apple     = arr[y][x]
     val_north = arr[(_y+1)%get_world_size()][_x]
