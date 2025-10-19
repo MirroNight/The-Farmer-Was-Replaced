@@ -11,7 +11,7 @@ plant_map = {
 
 plant_grass  = utils.get_plant_func(Grounds.Grassland, Entities.Grass,  0.0, False, True)
 plant_Bush   = utils.get_plant_func(Grounds.Grassland, Entities.Bush,   0.0, False, True)
-plant_tree   = utils.get_plant_func(Grounds.Grassland, Entities.Tree,   0.0, False, True)
+plant_tree   = utils.get_plant_func(Grounds.Grassland, Entities.Tree,   0.5, False, True)
 plant_carrot = utils.get_plant_func(Grounds.Soil,      Entities.Carrot, 0.0, False, True)
 
 plant_func_list = [
@@ -29,7 +29,7 @@ def get_next_location(arr, pos, plant_queue):
     
     # harvest first in queue
     elif len(plant_queue) > get_world_size() * (get_world_size()//2):
-        while len(plant_queue) > get_world_size()//3:
+        while len(plant_queue) > get_world_size() * (get_world_size()//3):
             queue_pos = plant_queue.pop(0)
             utils.move_to(queue_pos[0], queue_pos[1])
             while not can_harvest():

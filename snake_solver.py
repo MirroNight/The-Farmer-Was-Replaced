@@ -34,7 +34,7 @@ def snake_move_prime(_x, _y):
             move(East)
         else:
             move(South)
-    elif _x == 1 and _y == 15:
+    elif _x == 1 and _y == get_world_size()-1:
         move(West)
     elif _y%2:
         if _x > 1:
@@ -110,14 +110,13 @@ def solve_snake(arr):
     x, y, tail_length = None, None, 1
     while tail_length < (get_world_size()**2 - 1):
         arr, x, y, tail_length = get_apple(arr, x, y, tail_length)
+    change_hat(Hats.Brown_Hat)
     return arr
 
 
 if __name__ == '__main__':
-    utils.move_to_origin()
     clear()
     arr = utils.init_arr()
     arr = get_hamilton_path(arr)
-    utils.arr_display(arr, 'hamilton path')
+    # utils.arr_display(arr, 'hamilton path')
     arr = solve_snake(arr)
-    change_hat(Hats.Brown_Hat)
