@@ -150,12 +150,15 @@ def traverse_new_maze(arr, maze_graph, node_stack, depth, tpos):
     return arr, maze_graph, node_stack, depth+1            
 
 
-def run_maze(x, y, size, times=100):
+def run_maze(x, y, size, times=10):
+    if times > 300:
+        times = 300
+    
     new_maze(size, x, y)
     arr = utils.init_arr(size, None)
     
     maze_graph = {}
-    # {node: {north: node, south: node, east: node, west:node}}
+    # {node: {north: node, south: node, east: node, west: node}}
     # noe = (x,y) or (None, None)
     
     node_stack = []
@@ -181,5 +184,5 @@ def run_maze(x, y, size, times=100):
 
 
 if __name__ == '__main__':
-    run_maze(0,0,16)
+    run_maze(0, 0, 16, 300)
     pass
