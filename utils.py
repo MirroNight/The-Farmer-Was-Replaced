@@ -87,6 +87,8 @@ def get_plant_func(ground, crop, water_level_threshold=0.5, wait=False, force=Fa
 
         if get_water() < water_level_threshold:
             use_item(Items.Water)
+        if fert:
+            use_item(Items.Fertilizer)
 
     return check_harvest_till_plant
 
