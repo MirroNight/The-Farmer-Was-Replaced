@@ -2,8 +2,6 @@ import __builtins__
 import utils
 
 fert = False
-arr = utils.init_arr(get_world_size(), -1)  # will init to global 2D arr
-
 
 def replant_pumpkin_x(checklist, y):
     global fert
