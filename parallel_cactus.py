@@ -121,7 +121,6 @@ def non_blocking_join(ret_arr, drones, cnt):
 
 def parallel_restock_cactus():
     global arr
-    arr = utils.init_arr(get_world_size(), -1)
 
     # plant
     drones = []
