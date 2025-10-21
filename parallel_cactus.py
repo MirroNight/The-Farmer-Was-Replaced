@@ -176,6 +176,7 @@ def parallel_restock_cactus():
             arr[y][x] = ret_arr[x][y][x]
 
     harvest()
+    return 0
 
 if __name__ == '__main__':
     parallel_restock_cactus()
