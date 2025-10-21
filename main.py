@@ -96,6 +96,9 @@ def restock_everything(item):
         arr = snake_solver.solve_snake(arr)
     elif item == Items.Weird_Substance:
         function_map[Items.Weird_Substance](True)
+    elif item == Items.Power:
+        for _ in range(50):
+            function_map[item]()
     else:
         function_map[item]()
     return item
