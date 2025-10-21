@@ -6,7 +6,7 @@ import utils
 def new_maze(size=get_world_size(), x=None, y=None):
     if x!=None and y!=None:
         utils.move_to(x,y)
-        plant(Entities.Bush)
+    plant(Entities.Bush)
     amount = size * 2**(num_unlocked(Unlocks.Mazes)-1)
     if num_items(Items.Weird_Substance) >= amount:
         use_item(Items.Weird_Substance, amount)
@@ -50,12 +50,12 @@ def get_untraversed_neighboring_nodes(arr, maze_graph, x, y):
 
 # move back to nearest untraversed node
 # and return the next node's x and y
-def backtrack(arr, maze_graph, node_stack, depth):
-    arr[get_pos_y()][get_pos_x()] = depth
+def backtrack(arr, x0, y0, maze_graph, node_stack, depth):
+    arr[get_pos_y()-y0][get_pos_x()-x0] = depth
     # quick_print('backtracking ...')
     for _ in range(len(node_stack)):
         branchable, pos = node_stack.pop()
-        utils.move_to(pos[0], pos[1])
+        utils.move_to(pos[0]+x0, pos[1]+y0)
         if branchable:
             break
     depth = arr[pos[1]][pos[0]]
@@ -105,12 +105,13 @@ def get_new_node_fronts(arr, maze_graph, node_fronts, stack_graph, depth, tpos):
 
 
 # known map
-def breadth_first_search(maze_graph, size):
+def breadth_first_search(x0, y0, maze_graph, size):
     if get_entity_type() == Entities.Treasure:
         return maze_graph
     
     arr = utils.init_arr(size, None)
-    tpos, x, y = measure(), get_pos_x(), get_pos_y()
+    tops_x, tops_y = measure()
+    tpos, x, y = (tops_x-x0, tops_y-y0), get_pos_x()-x0, get_pos_y()-y0
     node_fronts = [(x, y)]
     stack_graph = {(x, y): None}
     arr[y][x], depth, stack = 0, 1, []
@@ -121,22 +122,22 @@ def breadth_first_search(maze_graph, size):
             )
     while stack:
         x, y = stack.pop()
-        utils.move_to(x, y)
+        utils.move_to(x+x0, y+y0)
         maze_graph[(x,y)] = get_neighboring_nodes(x, y)
     return maze_graph
 
 
 # unknown map
-def traverse_new_maze(arr, maze_graph, node_stack, depth, tpos):
-    x, y = get_pos_x(), get_pos_y()
+def traverse_new_maze(arr, x0, y0, maze_graph, node_stack, depth, tpos):
+    x, y = get_pos_x()-x0, get_pos_y()-y0
     maze_graph[(x,y)] = get_neighboring_nodes(x, y)
     next_nodes = get_untraversed_neighboring_nodes(arr, maze_graph, x, y)
 
     if not next_nodes:
         arr, node_stack, next_nodes, depth = backtrack(
-            arr, maze_graph, node_stack, depth
+            arr, x0, y0, maze_graph, node_stack, depth
             )
-        x, y = get_pos_x(), get_pos_y()
+        x, y = get_pos_x()-x0, get_pos_y()-y0
 
     if len(next_nodes) == 1:
         node_stack.append((False, (x,y)))
@@ -146,15 +147,18 @@ def traverse_new_maze(arr, maze_graph, node_stack, depth, tpos):
         node_stack.append((True, (x,y)))
 
     arr[y][x] = depth
-    utils.move_to(next_nodes[0][0], next_nodes[0][1])
+    utils.move_to(next_nodes[0][0]+x0, next_nodes[0][1]+y0)
     return arr, maze_graph, node_stack, depth+1            
 
 
-def run_maze(x, y, size, times=10):
+def run_maze(x=None, y=None, size=8, times=300):
+    do_a_flip()
     if times > 300:
         times = 300
     
-    new_maze(size, x, y)
+    if new_maze(size, x, y):
+        return 1
+    x0, y0 = get_pos_x(), get_pos_y()
     arr = utils.init_arr(size, None)
     
     maze_graph = {}
@@ -168,15 +172,15 @@ def run_maze(x, y, size, times=10):
     depth, tpos = 0, None
     while depth != None:
         arr, maze_graph, node_stack, depth = traverse_new_maze(
-            arr, maze_graph, node_stack, depth, tpos
+            arr, x0, y0, maze_graph, node_stack, depth, tpos
             )
 
-    maze_graph = breadth_first_search(maze_graph, size)
+    maze_graph = breadth_first_search(x0, y0, maze_graph, size)
 
     for _ in range(times-1):
         if new_maze(size):
             break
-        maze_graph = breadth_first_search(maze_graph, size)
+        maze_graph = breadth_first_search(x0, y0, maze_graph, size)
     
     harvest()
     
@@ -184,5 +188,4 @@ def run_maze(x, y, size, times=10):
 
 
 if __name__ == '__main__':
-    run_maze(0, 0, 16, 300)
-    pass
+    run_maze(0, 0, 16)
