@@ -2,7 +2,7 @@ import __builtins__
 import utils
 
 
-arr = utils.init_arr(get_world_size(), -1)  # will init to global 2D arr
+arr = []  # will init to global 2D arr
 
 
 def plant_cactus_x():
@@ -121,9 +121,9 @@ def non_blocking_join(ret_arr, drones, cnt):
 
 def parallel_restock_cactus():
     global arr
-
+    arr, drones = utils.init_arr(get_world_size(), -1), []
+    
     # plant
-    drones = []
     for y in range(get_world_size()-1):
         utils.move_to(0, y)
         drones.append(spawn_drone(plant_cactus_x))
