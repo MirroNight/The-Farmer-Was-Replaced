@@ -28,8 +28,8 @@ def get_next_location(arr, pos, plant_queue):
         return arr, pos, plant_queue
     
     # harvest first in queue
-    elif len(plant_queue) > get_world_size() * (get_world_size()//2):
-        while len(plant_queue) > get_world_size() * (get_world_size()//3):
+    elif len(plant_queue) > get_world_size() * (get_world_size()//4):
+        while len(plant_queue) > get_world_size() * (get_world_size()//8):
             queue_pos = plant_queue.pop(0)
             utils.move_to(queue_pos[0], queue_pos[1])
             while not can_harvest():
@@ -51,7 +51,12 @@ def get_next_location(arr, pos, plant_queue):
 def polyculture(arr, plant_queue):
     # arr init to -1
     # plnat_queue is empty list
-    crop_next, pos_next = get_companion()
+    companion = get_companion()
+    if companion:
+        crop_next, pos_next = companion
+    else:
+        crop_next = Entities.Grass
+        pos_next = (random()*100%get_world_size(), random()*100%get_world_size())
 
     # decide next position
     arr, pos_next, plant_queue = get_next_location(arr, pos_next, plant_queue)
