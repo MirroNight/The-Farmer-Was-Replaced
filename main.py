@@ -1,7 +1,7 @@
 import __builtins__
 import utils
 import parallel_energy, snake_solver
-import parallel_hay, parallel_wood, parallel_carrot
+import parallel_poly
 import parallel_cactus, parallel_maze_solver, parallel_pumpkin
 
 
@@ -27,26 +27,27 @@ prerequisite = {
     Items.Power:           [Items.Carrot],
     Items.Pumpkin:         [Items.Carrot],
     Items.Bone:            [Items.Cactus],
-    Items.Weird_Substance: [Items.Carrot, Items.Fertilizer],
+    Items.Weird_Substance: [Items.Carrot],
 }
 
 
 next_item = {
+Items.Power:           Items.Hay,
 Items.Hay:             Items.Wood,
 Items.Wood:            Items.Carrot,
 Items.Carrot:          Items.Cactus,
-Items.Cactus:          Items.Gold,
-Items.Gold:            Items.Pumpkin,
-Items.Pumpkin:         Items.Bone,
-Items.Bone:            Items.Weird_Substance,
-Items.Weird_Substance: None,
+Items.Cactus:          Items.Pumpkin,
+Items.Pumpkin:         Items.Weird_Substance,
+Items.Weird_Substance: Items.Gold,
+Items.Gold:            Items.Bone,
+Items.Bone:            None,
 }
 
 
 function_map = {
-Items.Hay:             parallel_hay.parallel_restock_hay,
-Items.Wood:            parallel_wood.parallel_restock_wood,
-Items.Carrot:          parallel_carrot.parallel_restock_carrot,
+Items.Hay:             parallel_poly.parallel_restock_poly,
+Items.Wood:            parallel_poly.parallel_restock_poly,
+Items.Carrot:          parallel_poly.parallel_restock_poly,
 Items.Cactus:          parallel_cactus.parallel_restock_cactus,
 Items.Gold:            parallel_maze_solver.parallel_maze_solver,
 Items.Power:           parallel_energy.parallel_restock_energy,

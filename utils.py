@@ -168,6 +168,7 @@ def arr_sum_kernel(arr, size, cond):
 
 
 if __name__=='__main__':
+    clear()
     change_hat(Hats.Brown_Hat)
     move_to(0,0)
     harvest()
