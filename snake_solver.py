@@ -53,7 +53,7 @@ def snake_move_dest(arr, _x, _y, x, y, tail_length):
     val_north = arr[(_y+1)%get_world_size()][_x]
     val_east  = arr[_y][(_x+1)%get_world_size()]
     val_west  = arr[_y][_x-1]
-    tail_end  = (arr[_y][_x] - tail_length + get_world_size()**2) % get_world_size()**2
+    tail_end  = get_world_size()**2 - tail_length
 
     if _x == 0 and _y == 0: # at (0,0): East, West
         move(East)
@@ -64,11 +64,11 @@ def snake_move_dest(arr, _x, _y, x, y, tail_length):
             if _x == 1 and _y != get_world_size()-1:
                 move(North)
             elif (apple - val_north) >= 0: # apple is >= north
-                if (val_north < tail_end) or (not move(North)):
+                if not ((val_north <= tail_end) and move(North)):
                     move(West)
             # apple is < north
             elif (apple - val_west) < 0: # apple is < west
-                if (val_north < tail_end) or (not move(North)):
+                if not ((val_north <= tail_end) and move(North)):
                     move(West)
             else:
                 move(West)
@@ -76,11 +76,11 @@ def snake_move_dest(arr, _x, _y, x, y, tail_length):
             if _x == get_world_size()-1 and _y != get_world_size()-1:
                 move(North)
             elif (apple - val_north) >= 0: # apple is >= north
-                if (val_north < tail_end) or (not move(North)):
+                if not ((val_north <= tail_end) and move(North)):
                     move(East)
             # apple is < north
             elif (apple - val_east) < 0: # apple is < east
-                if (val_north < tail_end) or (not move(North)):
+                if not ((val_north <= tail_end) and move(North)):
                     move(East)
             else:
                 move(East)
