@@ -68,7 +68,7 @@ def get_plant_func(ground, crop, water_level_threshold=0.5, wait=False, force=Fa
         # ground: Grounds
         # crop:   Entities
 
-        if wait and (not can_harvest()) :
+        while wait and (not can_harvest()) and get_entity_type():
             pass
 
         if can_harvest():
